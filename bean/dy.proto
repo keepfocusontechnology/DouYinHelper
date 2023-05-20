@@ -17,7 +17,7 @@ message Response {
   string pushServer = 10;
   string liveCursor = 11;
   bool historyNoMore = 12;
-}
+} 
 
 message Message{
     string method = 1;

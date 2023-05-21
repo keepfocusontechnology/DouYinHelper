@@ -9,11 +9,12 @@ from google.protobuf import json_format
 from bean.dy_pb2 import PushFrame,Response,ChatMessage
 
 
-def onOpen(ws,content):
-    print('on_open')
+def onOpen(ws):
+    print('onOpen')
+    
 
 def onMessage(ws,content):
-    
+    print('onMessage')
     frame = PushFrame()
     frame.ParseFromString(body_bytes)
 
@@ -32,11 +33,10 @@ def onMessage(ws,content):
         print(info)
 
 def onError(ws,content):
-     info = f"错误内容为: {content} "
-     print(info)
+     print(content)
 
-def onClose(ws,content):
-     print('on_cloese')
+def onClose(ws):
+     print('onClose')
 
 
 def parseLiveRoomUrl(url):
@@ -62,7 +62,7 @@ def parseLiveRoomUrl(url):
 def wssServerStart(roomId):
     global liveRoomId
     liveRoomId = roomId
-    websocket.enableTrace(False)
+    websocket.enableTrace(True)
     webSocketUrl = 'wss://webcast3-ws-web-lq.douyin.com/webcast/im/push/v2/?app_name=douyin_web&version_code=180800&webcast_sdk_version=1.3.0&update_version_code=1.3.0&compress=gzip&internal_ext=internal_src:dim|wss_push_room_id:'+liveRoomId+'|wss_push_did:7188358506633528844|dim_log_id:20230520121945B46758C962558DB5E3C1|fetch_time:1684556385653|seq:6|wss_info:0-1684556379596-1-0|wrds_kvs:WebcastRoomRankMessage-1684555970811623853_WebcastRoomStatsMessage-1684556384766727459&cursor=d-1_u-1_h-1_t-1684556385653_r-7235114581843136473_rdc-2&host=https://live.douyin.com&aid=6383&live_id=1&did_rule=3&debug=false&maxCacheMessageNumber=20&endpoint=live_pc&support_wrds=1&im_path=/webcast/im/fetch/&user_unique_id=7188358506633528844&device_platform=web&cookie_enabled=true&screen_width=1440&screen_height=900&browser_language=zh&browser_platform=MacIntel&browser_name=Mozilla&browser_version=5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML,%20like%20Gecko)%20Chrome/113.0.0.0%20Safari/537.36&browser_online=true&tz_name=Asia/Shanghai&identity=audience&room_id='+liveRoomId+'&heartbeatDuration=0&signature=RDggdDS41veLqFHS'
     h = {
         'cookie': 'ttwid='+ttwid,

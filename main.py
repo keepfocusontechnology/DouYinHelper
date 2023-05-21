@@ -4,9 +4,11 @@ import gzip
 import re
 import urllib
 import json
+import time
 from urllib.parse import unquote_plus
 import websocket
 from google.protobuf import json_format
+
 
 from bean.dy_pb2 import PushFrame
 from bean.dy_pb2 import Response
@@ -21,16 +23,21 @@ from bean.dy_pb2 import UpdateFanTicketMessage
 from bean.dy_pb2 import CommonTextMessage
 from websocket import WebSocketApp
 
+global timeStart 
 
 def onOpen(ws):
-    print('onOpen')
+    timeStart = time.localtime
+    print('onOpen time ='+timeStart)
     
 
 def onError(ws,content):
      print(content)
 
 def onClose(ws):
+     timeLen = time.time - timeLen
      print('onClose')
+     print('开始时间为 ='+timeStart)
+     print('结束时间 ='+time.timeStart)
 
 def onMessage(ws: websocket.WebSocketApp, message: bytes):
     wssPackage = PushFrame()
@@ -200,9 +207,9 @@ def fetch_live_room_info(url):
     room_title = data_dict['app']['initialState']['roomStore']['roomInfo']["room"]['title']
     room_user_count = data_dict['app']['initialState']['roomStore']['roomInfo']["room"]['user_count_str']
 
-    wss_url = f"wss://webcast3-ws-web-hl.douyin.com/webcast/im/push/v2/?app_name=douyin_web&version_code=180800&webcast_sdk_version=1.3.0&update_version_code=1.3.0&compress=gzip&internal_ext=internal_src:dim|wss_push_room_id:{room_id}|wss_push_did:7169945237800470068|dim_log_id:202305211845404BC31A40C91C83B5E682|fetch_time:1684665940167|seq:1|wss_info:0-1684665940167-0-0|wrds_kvs:WebcastRoomStatsMessage-1684665936654448799_WebcastRoomRankMessage-1684665564689274908&cursor=t-1684665940167_r-1_d-1_u-1_h-1&host=https://live.douyin.com&aid=6383&live_id=1&did_rule=3&debug=false&maxCacheMessageNumber=20&endpoint=live_pc&support_wrds=1&im_path=/webcast/im/fetch/&user_unique_id=7169945237800470068&device_platform=web&cookie_enabled=true&screen_width=2560&screen_height=1440&browser_language=zh-CN&browser_platform=Win32&browser_name=Mozilla&browser_version=5.0%20(Windows%20NT%2010.0;%20Win64;%20x64)%20AppleWebKit/537.36%20(KHTML,%20like%20Gecko)%20Chrome/113.0.0.0%20Safari/537.36&browser_online=true&tz_name=Asia/Hong_Kong&identity=audience&room_id={room_id}&heartbeatDuration=0&signature=WhzeuN2igfWGPvwb"
+    wss_url = f"wss://webcast3-ws-web-hl.douyin.com/webcast/im/push/v2/?app_name=douyin_web&version_code=180800&webcast_sdk_version=1.3.0&update_version_code=1.3.0&compress=gzip&internal_ext=internal_src:dim|wss_push_room_id:{room_id}|wss_push_did:7169945237800470068|dim_log_id:20230521222605BF47E30735BE0AD45ACA|fetch_time:1684679166011|seq:1|wss_info:0-1684679166011-0-0|wrds_kvs:LotteryInfoSyncData-1684678929492347110_WebcastRoomStatsMessage-1684679161666142461_WebcastRoomRankMessage-1684679155678865585&cursor=u-1_h-1_t-1684679166011_r-1_d-1&host=https://live.douyin.com&aid=6383&live_id=1&did_rule=3&debug=false&maxCacheMessageNumber=20&endpoint=live_pc&support_wrds=1&im_path=/webcast/im/fetch/&user_unique_id=7169945237800470068&device_platform=web&cookie_enabled=true&screen_width=2560&screen_height=1440&browser_language=zh-CN&browser_platform=Win32&browser_name=Mozilla&browser_version=5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.50&browser_online=true&tz_name=Asia/Hong_Kong&identity=audience&room_id={room_id}&heartbeatDuration=0&signature=RMui7rEMZKVleUA+"
 
-    # wss_url = f"wss://webcast3-ws-web-lq.douyin.com/webcast/im/push/v2/?app_name=douyin_web&version_code=180800&webcast_sdk_version=1.3.0&update_version_code=1.3.0&compress=gzip&internal_ext=internal_src:dim|wss_push_room_id:{room_id}|wss_push_did:7188358506633528844|dim_log_id:20230520121945B46758C962558DB5E3C1|fetch_time:1684556385653|seq:6|wss_info:0-1684556379596-1-0|wrds_kvs:WebcastRoomRankMessage-1684555970811623853_WebcastRoomStatsMessage-1684556384766727459&cursor=d-1_u-1_h-1_t-1684556385653_r-7235114581843136473_rdc-2&host=https://live.douyin.com&aid=6383&live_id=1&did_rule=3&debug=false&maxCacheMessageNumber=20&endpoint=live_pc&support_wrds=1&im_path=/webcast/im/fetch/&user_unique_id=7188358506633528844&device_platform=web&cookie_enabled=true&screen_width=1440&screen_height=900&browser_language=zh&browser_platform=MacIntel&browser_name=Mozilla&browser_version=5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML,%20like%20Gecko)%20Chrome/113.0.0.0%20Safari/537.36&browser_online=true&tz_name=Asia/Shanghai&identity=audience&room_id={room_id}&heartbeatDuration=0&signature=WhzeuN2igfWGPvwb"
+    # wss_url = f"wss://webcast3-ws-web-lq.douyin.com/webcast/im/push/v2/?app_name=douyin_web&version_code=180800&webcast_sdk_version=1.3.0&update_version_code=1.3.0&compress=gzip&internal_ext=internal_src:dim|wss_push_room_id:{room_id}|wss_push_did:7188358506633528844|dim_log_id:20230520121945B46758C962558DB5E3C1|fetch_time:1684556385653|seq:6|wss_info:0-1684556379596-1-0|wrds_kvs:WebcastRoomRankMessage-1684555970811623853_WebcastRoomStatsMessage-1684556384766727459&cursor=d-1_u-1_h-1_t-1684556385653_r-7235114581843136473_rdc-2&host=https://live.douyin.com&aid=6383&live_id=1&did_rule=3&debug=false&maxCacheMessageNumber=20&endpoint=live_pc&support_wrds=1&im_path=/webcast/im/fetch/&user_unique_id=7188358506633528844&device_platform=web&cookie_enabled=true&screen_width=1440&screen_height=900&browser_language=zh&browser_platform=MacIntel&browser_name=Mozilla&browser_version=5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_7)%20AppleWebKit/537.36%20(KHTML,%20like%20Gecko)%20Chrome/113.0.0.0%20Safari/537.36&browser_online=true&tz_name=Asia/Shanghai&identity=audience&room_id={room_id}&heartbeatDuration=0&signature=RMui7rEMZKVleUA+"
 
     global liveRoomId,liveRoomTitle
     
